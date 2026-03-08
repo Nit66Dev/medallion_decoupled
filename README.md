@@ -113,9 +113,7 @@ However, we also needed to add `spark.driver.host = 127.0.0.1`. **This was the s
 ├── xx2_4_medallion_gold.py    # PySpark script for sliding window aggregations
 └── README.md
 
-
-
-
+```
 
 
 ## 🏁 Getting Started & How to Run
