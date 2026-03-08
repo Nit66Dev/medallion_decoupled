@@ -130,7 +130,7 @@ To see the real-time Medallion Architecture in action, you will need to run the 
   pip install pyspark==3.5.1
 
 
-###Execution Steps
+### Execution Steps
 Open four separate terminal windows and execute the following commands in order. Leave each process running.
 Terminal 1: Start the Cybertron Server
 This script acts as our mock e-commerce backend, generating a continuous live socket stream of JSON clickstream data.
