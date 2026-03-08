@@ -130,13 +130,14 @@ To see the real-time Medallion Architecture in action, you will need to run the 
   pip install pyspark==3.5.1
 
 
-Execution Steps
+###Execution Steps
 Open four separate terminal windows and execute the following commands in order. Leave each process running.
 Terminal 1: Start the Cybertron Server
 This script acts as our mock e-commerce backend, generating a continuous live socket stream of JSON clickstream data.
 
 ```bash
 python cybertron_server.py
+```
 
 (Wait a few seconds for the server to initialize and start broadcasting on the designated port).
 Terminal 2: Ingest the Bronze Layer
@@ -144,18 +145,21 @@ This script connects to the live socket stream and lands the raw data into Delta
 
 ```bash
 python xx2_2_medallion_bronze.py
+```
 
 Terminal 3: Process the Silver Layer
 Once the Bronze layer is actively writing data, start the Silver job to handle schema enforcement, cleansing, and type casting.
 
 ```bash
 python xx2_3_medallion_silver.py
+```
 
 Terminal 4: Aggregate the Gold Layer
 Finally, start the Gold job to perform sliding window aggregations and calculate real-time business metrics (like live revenue).
 
 ```bash
 python xx2_4_medallion_gold.py
+```
 
 Stopping the Pipeline
 To gracefully shut down the pipeline, use Ctrl + C in each terminal window, ideally in reverse order (Gold -> Silver -> Bronze -> Server) to prevent broken stream states, though Delta Lake's checkpointing will ensure you don't lose data regardless
