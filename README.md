@@ -1,4 +1,4 @@
-# 🏗️ Real-Time E-Commerce Data Lakehouse (Medallion Architecture)
+# 🏗️ Real-Time Data Lakehouse Medallion Architecture
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue.svg)
 ![Apache Spark](https://img.shields.io/badge/Apache_Spark-3.5.1-orange.svg)
