@@ -1,11 +1,11 @@
-# 🏗️ Real-Time Data Lakehouse Medallion Architecture
+# Real-Time Data Lakehouse Medallion Architecture
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue.svg)
 ![Apache Spark](https://img.shields.io/badge/Apache_Spark-3.5.1-orange.svg)
 ![Delta Lake](https://img.shields.io/badge/Delta_Lake-3.1.0-blue.svg)
 ![Status](https://img.shields.io/badge/Status-Production_Ready-success.svg)
 
-## 📖 Table of Contents
+## Table of Contents
 1. [Project Overview](#project-overview)
 2. [Tech Stack](#tech-stack)
 3. [Pipeline Architecture](#pipeline-architecture)
@@ -16,12 +16,12 @@
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 This project simulates a real-time e-commerce streaming pipeline. It ingests messy, live JSON clickstream data and processes it through a highly scalable, decoupled **Medallion Architecture** (Bronze, Silver, Gold layers) using **Apache Spark (PySpark)** and **Delta Lake**.
 
 The pipeline is designed to be fault-tolerant, handling late-arriving data, schema enforcement, and stateful streaming aggregations on the fly.
 
-## 🛠️ Tech Stack
+## Tech Stack
 * **Engine:** Apache Spark 3.5.1 (PySpark)
 * **Storage Layer:** Delta Lake (ACID Transactions, Time Travel)
 * **Processing Model:** Structured Streaming (Micro-batching, Watermarking)
@@ -29,29 +29,29 @@ The pipeline is designed to be fault-tolerant, handling late-arriving data, sche
 
 ---
 
-## 🏛️ Pipeline Architecture
+## Pipeline Architecture
 
 The data flows through three distinct, decoupled layers, ensuring data quality and analytical readiness.
 
-### 🥉 Bronze Layer (Raw Ingestion)
+### Bronze Layer (Raw Ingestion)
 * **Source:** Live socket stream generating simulated user transactions (JSON).
 * **Process:** Appends raw string payloads to Delta tables with ingestion timestamps.
 * **Fault Tolerance:** Utilizes Delta checkpointing to maintain stream state and allow safe pipeline restarts without data loss.
 
-### 🥈 Silver Layer (Cleansing & Conformance)
+### Silver Layer (Cleansing & Conformance)
 * **Source:** Reads the continuous Bronze Delta stream.
 * **Process:** Parses complex JSON strings into typed PySpark `StructTypes`.
   * Enforces data quality: Drops records with missing `user_id`s and dynamically coalesces null `price` values to `0.0`.
   * Casts string timestamps into native PySpark `TimestampType`.
 
-### 🥇 Gold Layer (Business Aggregations)
+### Gold Layer (Business Aggregations)
 * **Source:** Reads the cleaned Silver Delta stream.
 * **Process:** Filters for "purchase" events and calculates live revenue.
 * **Advanced Streaming:** Implements a 1-minute **Watermark** to handle late-arriving data and groups metrics using a 30-second sliding/tumbling window to produce a real-time financial dashboard.
 
 ---
 
-## 🧠 Core Concepts: The Magic of Delta Lake
+## Core Concepts: The Magic of Delta Lake
 
 As we discussed, standard Parquet files are immutable (read-only). If you need to update a single customer's address in a 10-Terabyte Parquet file, you must rewrite the entire file.
 
@@ -61,7 +61,7 @@ This transaction log tracks every single insert, update, and delete you make. Be
 
 ---
 
-## ⚠️ Engineering Notes & Troubleshooting: The Py4J JVM Network Bug
+## Engineering Notes & Troubleshooting: The Py4J JVM Network Bug
 
 Running Apache Spark locally on a Mac can sometimes trigger severe network timeout errors upon startup (e.g., `JAVA_GATEWAY_EXITED` and `Connection from <unknown remote> closed`). Here is a deep dive into the architecture, the root cause, and how to fix it.
 
@@ -99,7 +99,7 @@ However, we also needed to add `spark.driver.host = 127.0.0.1`. **This was the s
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 .
@@ -116,7 +116,7 @@ However, we also needed to add `spark.driver.host = 127.0.0.1`. **This was the s
 ```
 
 
-## 🏁 Getting Started & How to Run
+## Getting Started & How to Run
 
 To see the real-time Medallion Architecture in action, you will need to run the scripts in a specific sequence. Because this is a streaming application, each layer depends on the upstream data feed being active.
 
